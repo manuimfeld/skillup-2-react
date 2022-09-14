@@ -113,7 +113,6 @@
 
     .filters-section {
         width: calc(50vw - 30px);
-        margin: 20px 40px 0 0;
     }
 
     .createTask, .filtersTask {
