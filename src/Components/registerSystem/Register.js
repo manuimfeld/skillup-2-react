@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/register.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormRegister from "./FormRegister";

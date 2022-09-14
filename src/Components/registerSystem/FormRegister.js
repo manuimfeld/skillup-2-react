@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/register.css";
 import { Form, Field } from "formik";
 
 const FormRegister = ({ errors, touched }) => {
