@@ -1,9 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Login } from "./components";
-import Header from "./components/Header";
-import Register from "./components/registerSystem/Register";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Home, Login } from "./Components";
+import Header from "./Components/Header";
+import Register from "./Components/registerSystem/Register";
 
 function App() {
+  const RequireAuth = ({ children }) => {
+    console.log(localStorage.getItem("logged"));
+    if (!localStorage.getItem("logged")) {
+      return <Navigate to="/login" replace={true} />;
+    }
+    return children;
+  };
+
   return (
     <>
       <Header />
@@ -11,8 +19,22 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/inicio" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/inicio"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
