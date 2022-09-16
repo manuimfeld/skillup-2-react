@@ -7,11 +7,11 @@ flex-direction: column;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #E9E9E9;
+    border: 1px solid var(--color-border);
     margin: 20px;
     border-radius: 8px;
     padding: 10px 0px 10px 0px;
-    box-shadow: 3px 3px 4px 3px #E9E9E9 ;
+    box-shadow: 3px 3px 4px 3px var(--color-border) ;
     align-self: center;
     margin-top: 40px;
 }
@@ -34,7 +34,7 @@ flex-direction: column;
     width: 90%;
     height: 2rem;
     border-radius: 8px;
-    border: 1px solid #E9E9E9;
+    border: 1px solid var(--color-border);
     margin-bottom:15px;
     font-size: 1rem;
 }
@@ -46,7 +46,7 @@ flex-direction: column;
 
 #loginForm button{
     border-radius: 8px;
-    background: #FF452B;
+    background: var(--color-primary);
     padding: 15px;
     width: 90%;
     color: white;
@@ -57,16 +57,16 @@ flex-direction: column;
 }
 #loginForm button:hover{
     background-color: transparent;
-    color: #FF452B;
-    border: 1px solid #FF452B;
-    box-shadow: 3px 3px 4px 3px #E9E9E9 ;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    box-shadow: 3px 3px 4px 3px var(--color-border);
     transition: all 0.2s;
 }
 
 .loginErr{
     font-size: 1rem;
     margin-top: -15px;
-    color: red;
+    color: var(--color-primary);
     font-weight: 600;
     align-self: flex-start;
     margin-left: 4vw;
