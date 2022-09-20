@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataRegister } from "../../redux/actions";
 
-const FormRegister = ({ errors, touched }) => {
+const FormRegister = ({ errors, touched, values }) => {
   const dispatch = useDispatch();
   // const [datosRegistro, setDatosRegistro] = useState({});
   const datosRegistro = useSelector((e) => e.dataRegister);
@@ -28,7 +28,7 @@ const FormRegister = ({ errors, touched }) => {
       <ul>
         <li>
           <label htmlFor="userName">Nombre de usuario</label>
-          <Field name="userName" id="userName" />
+          <Field name="userName" type="text" id="userName" />
           {errors.userName && touched.userName ? (
             <div className="msg-error-form">{errors.userName}</div>
           ) : null}
@@ -50,27 +50,26 @@ const FormRegister = ({ errors, touched }) => {
         <li>
           <Field type="checkbox" name="belong" id="belong" />
           <label htmlFor="belong">¿Perteneces a un equipo ya creado?</label>
-          {errors.belong && touched.belong ? (
-            <div className="msg-error-form">{errors.belong}</div>
-          ) : null}
         </li>
-        <li>
-          <label htmlFor="group-id">
-            Por favor, introduce el identificador de equipo
-          </label>
-          <Field name="teamID" id="group-id" />
-          {errors.teamID && touched.teamID ? (
-            <div className="msg-error-form">{errors.teamID}</div>
-          ) : null}
-        </li>
+        {values.belong && (
+          <li>
+            <label htmlFor="group-id">
+              Por favor, introduce el identificador de equipo
+            </label>
+            <Field name="teamID" id="group-id" />
+            {errors.teamID && touched.teamID ? (
+              <div className="msg-error-form">{errors.teamID}</div>
+            ) : null}
+          </li>
+        )}
         <li>
           <label htmlFor="select-rol">Rol: </label>
           <Field name="role" as="select" id="select-rol">
-            <option value="null" selected disabled>
+            <option value="" selected disabled>
               Selecciona un rol
             </option>
             {datosRegistro?.Rol?.map((i) => (
-              <option key={i} defaultValue={i}>
+              <option key={i} value={i}>
                 {i}
               </option>
             ))}
@@ -82,11 +81,11 @@ const FormRegister = ({ errors, touched }) => {
         <li>
           <label htmlFor="continente">Continente</label>
           <Field name="continent" as="select" id="continente">
-            <option value="null" selected disabled>
+            <option value="" selected disabled>
               Selecciona un continente
             </option>
             {datosRegistro?.continente?.map((i) => (
-              <option key={i} defaultValue={i}>
+              <option key={i} value={i}>
                 {i}
               </option>
             ))}
@@ -98,11 +97,11 @@ const FormRegister = ({ errors, touched }) => {
         <li>
           <label htmlFor="region">Región: </label>
           <Field name="region" as="select" id="region">
-            <option value="null" selected disabled>
+            <option value="" selected disabled>
               Selecciona una region
             </option>
             {datosRegistro?.region?.map((i) => (
-              <option key={i} defaultValue={i}>
+              <option key={i} value={i}>
                 {i}
               </option>
             ))}

@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Task from "./Task";
 import { Form, Field, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { getTasks } from "../redux/actions";
 
 const FiltersTask = () => {
+  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const token = await localStorage.getItem("token");
+
+        const respuesta = await dispatch(getTasks(token));
+        console.log(respuesta);
+      } catch (e) {
+        console.log("error: ", e);
+      }
+    }
+    fetch();
+  }, []);
+
   return (
     <section className="filters-section">
       <Formik>

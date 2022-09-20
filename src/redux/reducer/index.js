@@ -1,7 +1,8 @@
-import { GET_DATA_REGISTER } from "../actions";
+import { GET_DATA_REGISTER, GET_USER } from "../actions";
 
 const initialState = {
   dataRegister: [],
+  user: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -11,7 +12,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         dataRegister: action.payload,
       };
-
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     default:
       return { ...state };
   }

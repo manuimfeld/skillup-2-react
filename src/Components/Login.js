@@ -2,38 +2,43 @@ import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import YupPassword from "yup-password";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions";
 
 YupPassword(Yup);
 const schema = Yup.object().shape({
-  username: Yup.string().email("Mail invalido").required("Ingrese su email"),
+  username: Yup.string().required("Ingrese su usuario"),
   password: Yup.string()
-    .min(6, "mínimo 6 caracteres")
-    .minUppercase(1, "Al menos 1 Mayus")
-    .minLowercase(1, "Al menos 1 Minus")
-    .minNumbers(1, "Al menos 1 Numb")
-    .required("ingrese su contraseña"),
+    // .min(6, "mínimo 6 caracteres")
+    // .minUppercase(1, "Al menos 1 Mayus")
+    // .minLowercase(1, "Al menos 1 Minus")
+    // .minNumbers(1, "Al menos 1 Numb")
+    .required("Ingrese su contraseña"),
 });
 
 const Login = () => {
   const [data, setData] = useState({});
   const dispatch = useDispatch();
-  function handleSubmit(datos) {
+  const navigate = useNavigate();
+
+  async function handleSubmit(datos) {
     datos.preventDefault();
     try {
-      dispatch(
+      const user = await dispatch(
         loginUser({
           userName: datos.target.username.value,
           password: datos.target.password.value,
         })
       );
+      localStorage.setItem("token", user.payload.token);
+      navigate("/");
     } catch (e) {
       alert(e.message);
     }
   }
+
   return (
     <div>
       <Formik

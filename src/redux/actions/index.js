@@ -2,12 +2,12 @@ import axios from "axios";
 
 export const LOGIN_USER = "LOGIN_USER";
 export const GET_DATA_REGISTER = "GET_DATA_REGISTER";
+export const GET_USER = "GET_USER";
 
 export const getDataRegister = () => {
   try {
     return async function (dispatch) {
       let res = await axios.get("https://goscrum-api.alkemy.org/auth/data");
-      console.log(res.data.result);
       return dispatch({ type: GET_DATA_REGISTER, payload: res.data.result });
     };
   } catch (e) {
@@ -24,11 +24,9 @@ export const loginUser = (dataUser) => {
         url: "https://goscrum-api.alkemy.org/auth/login",
         data: dataUser,
       });
-      console.log(res.data);
-      // return dispatch({ type: GET_USER, payload: res.data });
+      return dispatch({ type: GET_USER, payload: res.data.result });
     };
   } catch (e) {
-    console.log("super error");
     console.log("error: ", e);
   }
 };
@@ -37,16 +35,32 @@ export const registerUser = (dataUser) => {
   try {
     return async function (dispatch) {
       let res = await axios({
-        method: "post",
-        header: [],
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         url: "https://goscrum-api.alkemy.org/auth/register",
-        data: dataUser,
+        data: JSON.stringify(dataUser),
+      });
+      return res.data;
+    };
+  } catch (e) {
+    throw new Error("Hubo un problema al registar el usuario");
+  }
+};
+
+export const getTasks = (token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "GET",
+        headers: {
+          bearer: token,
+        },
+        url: "https://goscrum-api.alkemy.org/task/data",
       });
       console.log(res.data);
       // return dispatch({ type: GET_USER, payload: res.data });
     };
   } catch (e) {
-    console.log("super error");
     console.log("error: ", e);
   }
 };

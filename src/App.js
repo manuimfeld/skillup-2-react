@@ -5,8 +5,7 @@ import Register from "./Components/registerSystem/Register";
 
 function App() {
   const RequireAuth = ({ children }) => {
-    console.log(localStorage.getItem("logged"));
-    if (!localStorage.getItem("logged")) {
+    if (!localStorage.getItem("token")) {
       return <Navigate to="/login" replace={true} />;
     }
     return children;

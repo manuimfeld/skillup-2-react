@@ -2,12 +2,15 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormRegister from "./FormRegister";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/actions";
+import { v4 as uuidv4 } from "uuid";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /* FORM VALIDATORS */
   const SignupSchema = Yup.object().shape({
@@ -18,32 +21,38 @@ const Register = () => {
         /^[aA-zZ\s]+$/,
         "El nombre de usuario solo puede contener letras"
       )
-      .required("Este campo es obligatorio"),
+      .required("Requerido"),
     password: Yup.string()
       .min(6, "La contraseña debe tener mínimo 6 caracteres")
       .max(18, "La contraseña debe tener máximo 18 carácteres")
       .minUppercase(1, "La contraseña debe tener al menos 1 mayúscula")
       .minLowercase(1, "La contraseña debe tener al menos 1 minúscula")
       .minNumbers(1, "La contraseña debe tener al menos 1 númer")
-      .required("Este campo es obligatorio"),
-    email: Yup.string()
-      .email("Email inválido")
-      .required("Este campo es obligatorio"),
-    belong: Yup.string(),
-    teamID: Yup.string(),
-    role: Yup.string().required("Este campo es obligatorio").nullable(),
-    continent: Yup.string().required("Este campo es obligatorio").nullable(),
-    region: Yup.string().required("Este campo es obligatorio").nullable(),
+      .required("Requerido"),
+    email: Yup.string().email("Email inválido").required("Requerido"),
+    // belong: Yup.string(),
+    // teamID: Yup.string().nullable(),
+    teamID: Yup.string().when("belong", {
+      is: (belong) => belong !== false,
+      then: Yup.string().required("Requerido"),
+    }),
+    role: Yup.string().required("Requerido").nullable(),
+    continent: Yup.string().required("Requerido").nullable(),
+    region: Yup.string().required("Requerido").nullable(),
   });
 
-  function handleSubmit(datos) {
+  async function handleSubmit(datos) {
+    if (!datos.belong) {
+      datos.teamID = uuidv4();
+    }
+    delete datos.belong;
     const user = { user: datos };
-    // if (user.belong !== true) {
-    //   delete user.teamID;
-    // }
-    // console.log(user);
-    // delete user.belong;
-    dispatch(registerUser(user));
+    // console.log(user.user);
+    try {
+      const respuesta = await dispatch(registerUser(user));
+      console.log(respuesta);
+      navigate("/login", { replace: true });
+    } catch (error) {}
   }
 
   return (
@@ -53,12 +62,17 @@ const Register = () => {
           userName: "",
           password: "",
           email: "",
+          belong: false,
+          teamID: "",
+          role: "",
+          continent: "",
+          region: "",
         }}
         validationSchema={SignupSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
-          <FormRegister errors={errors} touched={touched} />
+        {({ errors, touched, values }) => (
+          <FormRegister errors={errors} touched={touched} values={values} />
         )}
       </Formik>
     </div>
