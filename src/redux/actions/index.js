@@ -1,8 +1,13 @@
 import axios from "axios";
 
-export const LOGIN_USER = "LOGIN_USER";
-export const GET_DATA_REGISTER = "GET_DATA_REGISTER";
-export const GET_USER = "GET_USER";
+export const LOGIN_USER = "LOGIN_USER",
+  GET_DATA_REGISTER = "GET_DATA_REGISTER",
+  GET_USER = "GET_USER",
+  ADD_TASK = "ADD_TASK",
+  GET_TASKS = "GET_TASKS",
+  GET_TASK = "GET_TASK",
+  PATCH_TASK = "PATCH_TASK",
+  DELETE_TASK = "DELETE_TASK";
 
 export const getDataRegister = () => {
   try {
@@ -47,18 +52,116 @@ export const registerUser = (dataUser) => {
   }
 };
 
+export const postTask = (task, token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: "https://goscrum-api.alkemy.org/task",
+        data: JSON.stringify({ task: task }),
+      });
+      // console.log(res.data.result.task);
+      return dispatch({ type: ADD_TASK, payload: res.data.result.task });
+    };
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
 export const getTasks = (token) => {
   try {
     return async function (dispatch) {
       let res = await axios({
         method: "GET",
         headers: {
-          bearer: token,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        url: "https://goscrum-api.alkemy.org/task/data",
+        url: "https://goscrum-api.alkemy.org/task",
       });
       console.log(res.data);
-      // return dispatch({ type: GET_USER, payload: res.data });
+      return dispatch({ type: GET_TASKS, payload: res.data.result });
+    };
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
+export const getPersonalTasks = (token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: "https://goscrum-api.alkemy.org/task/me",
+      });
+      console.log(res.data);
+      // return dispatch({ type: GET_TASKS, payload: res.data.result });
+    };
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
+export const getTask = (id, token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: "https://goscrum-api.alkemy.org/task/" + id,
+      });
+      console.log(res.data);
+      // return dispatch({ type: GET_TASK, payload: res.data.result });
+    };
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
+export const patchTask = (task, id, token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: "https://goscrum-api.alkemy.org/task/" + id,
+        data: JSON.stringify({ task: task }),
+      });
+      console.log(res.data);
+      // return dispatch({ type: PATCH_TASK, payload: res.data.result });
+    };
+  } catch (e) {
+    console.log("error: ", e);
+  }
+};
+
+export const deleteTask = (task, id, token) => {
+  try {
+    return async function (dispatch) {
+      let res = await axios({
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        url: "https://goscrum-api.alkemy.org/task/" + id,
+      });
+      console.log(res.data);
+      // return dispatch({ type: DELETE_TASK, payload: res.data.result });
     };
   } catch (e) {
     console.log("error: ", e);

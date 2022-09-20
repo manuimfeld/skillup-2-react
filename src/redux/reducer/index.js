@@ -1,8 +1,18 @@
-import { GET_DATA_REGISTER, GET_USER } from "../actions";
+import {
+  GET_DATA_REGISTER,
+  GET_USER,
+  ADD_TASK,
+  GET_TASKS,
+  GET_TASK,
+  PATCH_TASK,
+  DELETE_TASK,
+} from "../actions";
 
 const initialState = {
   dataRegister: [],
   user: {},
+  tasks: [],
+  task: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -16,6 +26,21 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
+      };
+    case ADD_TASK:
+      return {
+        ...state,
+        tasks: [...state.tasks, action.payload],
+      };
+    case GET_TASKS:
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+    case GET_TASK:
+      return {
+        ...state,
+        task: action.payload,
       };
     default:
       return { ...state };
