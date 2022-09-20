@@ -1,3 +1,4 @@
+import "../styles/login.css";
 import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import YupPassword from "yup-password";
@@ -9,7 +10,7 @@ import { loginUser } from "../redux/actions";
 
 YupPassword(Yup);
 const schema = Yup.object().shape({
-  username: Yup.string().required("Ingrese su usuario"),
+  username: Yup.string().required("*Campo obligatorio"),
   password: Yup.string()
     // .min(6, "mínimo 6 caracteres")
     // .minUppercase(1, "Al menos 1 Mayus")
@@ -40,34 +41,56 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <Formik
-        validationSchema={schema}
-        onSubmit={(values) => handleSubmit(values)}
-        initialValues={{
-          username: "",
-          password: "",
-        }}
+    <div id="loginWrapper">
+      <div id="loginCont">
+        <title id="loginTitle">Iniciar sesión</title>
+        <Formik
+          validationSchema={schema}
+          onSubmit={(values) => handleSubmit(values)}
+          initialValues={{
+            username: "",
+            password: "",
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form onSubmit={handleSubmit}>
+              <label htmlFor="username">Nombre de usuario</label>
+              <Field name="username" />
+              {touched.username && errors.username && (
+                <div>{errors.username}</div>
+              )}
+              <label htmlFor="password">Contraseña</label>
+              <Field name="password" type="password" />
+              {touched.password && errors.password && (
+                <div>{errors.password}</div>
+              )}
+              <button type="submit">Enviar</button>
+            </Form>
+          )}
+        </Formik>
+        <Link to="/register">
+          <button>Registrarme</button>
+        </Link>
+        {/* onSubmit={e=>handleSubmit(e)}
+        initialTouched={e=>console.log("works")}
+        initialErrors={e=>console.log(e)}
       >
-        {({ errors, touched }) => (
-          <Form onSubmit={handleSubmit}>
+       {({ errors, touched }) => (
+         <Form id="loginForm">
             <label htmlFor="username">Nombre de usuario</label>
-            <Field name="username" />
-            {touched.username && errors.username && (
-              <div>{errors.username}</div>
-            )}
-            <label htmlFor="password">Contraseña</label>
-            <Field name="password" type="password" />
-            {touched.password && errors.password && (
-              <div>{errors.password}</div>
-            )}
-            <button type="submit">Enviar</button>
-          </Form>
-        )}
+           <Field id="userIn" name="username" />
+           {(touched.username && errors.username) && <span className="loginErr">{errors.username}</span>}
+           <label htmlFor="password">Contraseña</label>
+           <Field id="passIn" name="password" type="password" />
+           {(touched.password && errors.password) && <span className="loginErr">{errors.password}</span>}
+           <button id="loginBtn" type="submit">Enviar</button>
+         </Form>
+       )}
       </Formik>
-      <Link to="/register">
-        <button>Registrarme</button>
-      </Link>
+      <Link id="rregBtn" to="/register">
+        <span>Registrarme</span>
+      </Link>  */}
+      </div>
     </div>
   );
 };
