@@ -1,0 +1,102 @@
+#loginWrapper{
+display: flex;
+flex-direction: column;
+}
+#loginCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    margin: 20px;
+    border-radius: 8px;
+    padding: 10px 0px 10px 0px;
+    box-shadow: 3px 3px 4px 3px var(--color-border) ;
+    align-self: center;
+    margin-top: 40px;
+}
+#loginCont title{
+    display: inline;
+    align-self: flex-start;
+    margin-left: 5vw;
+    font-size: 2rem;
+    font-weight: 600;
+}
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    gap: 5px;
+}
+#loginForm input{
+    width: 90%;
+    height: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    margin-bottom:15px;
+    font-size: 1rem;
+}
+#loginForm label{
+    align-self: flex-start;
+    margin-left: 5vw;
+    font-size: 1rem;
+}
+
+#loginForm button{
+    border-radius: 8px;
+    background: var(--color-primary);
+    padding: 15px;
+    width: 90%;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.4s;
+}
+#loginForm button:hover{
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    box-shadow: 3px 3px 4px 3px var(--color-border);
+    transition: all 0.2s;
+}
+
+.loginErr{
+    font-size: 1rem;
+    margin-top: -15px;
+    color: var(--color-primary);
+    font-weight: 600;
+    align-self: flex-start;
+    margin-left: 4vw;
+}
+
+#rregBtn{
+    text-decoration: none;
+    color: black;
+    align-self: flex-start;
+    margin-left: 5vw;
+    margin-top: 10px;
+}
+
+@media screen and (min-width: 900px){
+    #loginCont{
+        width: 800px;
+    }
+    #loginCont title{
+        margin-left: 33px;
+    }
+    #loginForm{
+        width: 810px;
+    }
+    #loginForm label{
+        margin-left:40px;
+    }
+    #rregBtn{
+        margin-left: 33px;
+    }
+    .loginErr{
+        margin-left:35px ;
+    }
+}
