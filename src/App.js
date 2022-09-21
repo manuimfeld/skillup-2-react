@@ -1,62 +1,78 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { lazy } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { Home, Login } from "./Components";
 import Header from "./Components/Header";
 import Auth from "./Components/Auth";
 import Register from "./Components/registerSystem/Register";
+import { AnimatePresence, motion } from "framer-motion";
+import Motion from "./Components/Motion";
+
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // import { Home, Login, Header, Register, Auth } from "./Components/index";
 
 function App() {
-  const RequireAuth = ({ children }) => {
-    if (!localStorage.getItem("token")) {
-      return <Navigate to="/login" replace={true} />;
-    }
-    return children;
+  // const location = useLocation();
+  const pageTransition = {
+    in: {
+      opacity: 1,
+    },
+    out: {
+      opacity: 0,
+    },
   };
 
   return (
     <>
       <Header />
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          {/* <Route
-            path="/"
-            element={
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/inicio"
-            element={
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            }
-          /> */}
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/"
-            element={
-              <Auth>
-                <Home />
-              </Auth>
-            }
-          />
-          <Route
-            path="/inicio"
-            element={
-              <Auth>
-                <Home />
-              </Auth>
-            }
-          />
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/inicio" element={<Home />} /> */}
-        </Routes>
+        <AnimatePresence>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <Motion>
+                  <Login />
+                </Motion>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Motion>
+                  <Register />
+                </Motion>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <Motion>
+                  <Auth>
+                    <Home />
+                  </Auth>
+                </Motion>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <Motion>
+                  <Auth>
+                    <Home />
+                  </Auth>
+                </Motion>
+              }
+            />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </AnimatePresence>
       </BrowserRouter>
     </>
   );

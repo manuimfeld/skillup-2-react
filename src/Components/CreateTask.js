@@ -14,11 +14,12 @@ const schema = Yup.object().shape({
 const CreateTask = ({ errors, touched }) => {
   const dispatch = useDispatch();
 
-  async function handleSubmit(datos) {
+  async function handleSubmit(datos, props) {
     try {
       const respuesta = dispatch(
         postTask(datos, localStorage.getItem("token"))
       );
+      props.resetForm();
     } catch (e) {
       alert(e.message);
     }
@@ -28,7 +29,7 @@ const CreateTask = ({ errors, touched }) => {
     <section className="createTask-section">
       <Formik
         validationSchema={schema}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values, props) => handleSubmit(values, props)}
         initialValues={{
           title: "",
           importance: "",
@@ -65,13 +66,6 @@ const CreateTask = ({ errors, touched }) => {
                 {errors.status && touched.status ? (
                   <div className="msg-error-form">{errors.status}</div>
                 ) : null}
-                {/* <select name="select-rol" id="select-rol">
-                  <option disabled selected>
-                    Selecciona un estado
-                  </option>
-                  <option value="value1">Completa</option>
-                  <option value="value2">Incompleta</option>
-                </select> */}
               </li>
               <li>
                 <Field name="importance" as="select" id="importance">
@@ -85,13 +79,6 @@ const CreateTask = ({ errors, touched }) => {
                 {errors.importance && touched.importance ? (
                   <div className="msg-error-form">{errors.importance}</div>
                 ) : null}
-                {/* <select name="select-rol" id="select-rol">
-                  <option disabled selected>
-                    Selecciona una prioridad
-                  </option>
-                  <option value="value1">Baja</option>
-                  <option value="value2">Alta</option>
-                </select> */}
               </li>
               <li>
                 <label htmlFor="text-task">
@@ -104,11 +91,6 @@ const CreateTask = ({ errors, touched }) => {
                   {errors.description && touched.description ? (
                     <div className="msg-error-form">{errors.description}</div>
                   ) : null}
-                  {/* <textarea
-                    name="text-task"
-                    id="text-task"
-                    placeholder="Descripción"
-                  ></textarea> */}
                 </label>
               </li>
               <li>

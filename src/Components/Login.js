@@ -11,12 +11,7 @@ import { loginUser } from "../redux/actions";
 YupPassword(Yup);
 const schema = Yup.object().shape({
   username: Yup.string().required("*Campo obligatorio"),
-  password: Yup.string()
-    // .min(6, "mínimo 6 caracteres")
-    // .minUppercase(1, "Al menos 1 Mayus")
-    // .minLowercase(1, "Al menos 1 Minus")
-    // .minNumbers(1, "Al menos 1 Numb")
-    .required("Ingrese su contraseña"),
+  password: Yup.string().required("Ingrese su contraseña"),
 });
 
 const Login = () => {
