@@ -75,6 +75,16 @@ const rootReducer = (state = initialState, action) => {
           filteredTasks: filtrados,
         };
       }
+
+    case DELETE_TASK:
+      const filtrados = state.tasks.filter((i) => i._id !== action.payload);
+
+      return {
+        ...state,
+        tasks: filtrados,
+        filteredTasks: filtrados,
+      };
+
     default:
       return { ...state };
   }

@@ -1,7 +1,18 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteTask, getTasks } from "../redux/actions";
 import s from "../styles/task.module.css";
 
-const Task = ({ title, fecha, usuario, status, prioridad, description }) => {
+const Task = ({
+  title,
+  fecha,
+  usuario,
+  status,
+  prioridad,
+  description,
+  id,
+}) => {
+  const dispatch = useDispatch();
   function yyyymmdd(fecha) {
     function addZero(i) {
       if (i < 10) {
@@ -20,8 +31,23 @@ const Task = ({ title, fecha, usuario, status, prioridad, description }) => {
     return dia + " - " + hora;
   }
 
+  async function borrarTareaHandler(id) {
+    try {
+      const token = localStorage.getItem("token");
+      await dispatch(deleteTask(id, token));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className={s.container}>
+      <button
+        className={s.botonEliminar}
+        onClick={() => borrarTareaHandler(id)}
+      >
+        X
+      </button>
       <h3>{title}</h3>
       <h6>{yyyymmdd(fecha)}</h6>
       <h5>{usuario}</h5>

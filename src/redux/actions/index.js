@@ -149,7 +149,7 @@ export const patchTask = (task, id, token) => {
   }
 };
 
-export const deleteTask = (task, id, token) => {
+export const deleteTask = (id, token) => {
   try {
     return async function (dispatch) {
       let res = await axios({
@@ -160,8 +160,7 @@ export const deleteTask = (task, id, token) => {
         },
         url: "https://goscrum-api.alkemy.org/task/" + id,
       });
-      console.log(res.data);
-      // return dispatch({ type: DELETE_TASK, payload: res.data.result });
+      return dispatch({ type: DELETE_TASK, payload: id });
     };
   } catch (e) {
     console.log("error: ", e);

@@ -5,6 +5,7 @@
     min-height: fit-content;
     background-color: var(--color-bg-soft);
     border-radius: 16px;
+    position: relative
 }
 
 .boton {
@@ -14,4 +15,14 @@
     margin: 2px;
     font-weight: 700;
 
+}
+
+.botonEliminar {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
 }

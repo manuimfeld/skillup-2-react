@@ -9,9 +9,11 @@ const Tasks = ({ tareas }) => {
     <>
       {tareas &&
         tareas?.map((i) => {
+          console.log(i);
           return (
             <Task
               key={i.title}
+              id={i._id}
               title={i.title}
               fecha={i.createdAt}
               usuario={i.user.userName}
