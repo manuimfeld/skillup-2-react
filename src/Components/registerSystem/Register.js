@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/actions";
 import { v4 as uuidv4 } from "uuid";
 
+import s from "../../styles/register.module.css";
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,7 +49,6 @@ const Register = () => {
     }
     delete datos.belong;
     const user = { user: datos };
-    // console.log(user.user);
     try {
       const respuesta = await dispatch(registerUser(user));
       console.log(respuesta);
@@ -56,7 +57,7 @@ const Register = () => {
   }
 
   return (
-    <div className="form-container">
+    <div className={s.container}>
       <Formik
         initialValues={{
           userName: "",

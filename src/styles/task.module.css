@@ -1,19 +1,16 @@
 .container {
+    margin-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     text-align: center;
     width: 80%;
+    max-width: 300px;
     height: 200px;
-    min-height: fit-content;
     background-color: var(--color-bg-soft);
     border-radius: 16px;
-    position: relative
-}
-
-.boton {
-    background-color: var(--color-primary);
-    border-radius: 18px;
-    border: 0.5px solid black;
-    margin: 2px;
-    font-weight: 700;
+    position: relative;
 
 }
 
@@ -25,4 +22,30 @@
     background-color: var(--color-primary);
     color: white;
     border-radius: 50%;
+    border: 0px;
+}
+
+.titulo {
+    margin: 3px 0;
+}
+
+.fecha {
+    margin: 3px 0
+}
+
+.usuario {
+    margin: 3px 0
+}
+
+.description {
+    margin: 3px 0;
+}
+
+.boton {
+    background-color: var(--color-primary);
+    border-radius: 18px;
+    border: 0.5px solid black;
+    margin: 2px;
+    font-weight: 700;
+    width: 150px;
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { filtrarTareas, postTask } from "../redux/actions";
+
+import s from "../styles/login.module.css";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Requerido"),
@@ -11,23 +11,9 @@ const schema = Yup.object().shape({
   description: Yup.string().required("Requerido"),
 });
 
-const CreateTask = ({ errors, touched, handleSubmit }) => {
-  const dispatch = useDispatch();
-
-  // async function handleSubmit(datos, props) {
-  //   try {
-  //     const respuesta = dispatch(
-  //       postTask(datos, localStorage.getItem("token"))
-  //     );
-  //     dispatch(filtrarTareas("INICIAR", "INICIAR"));
-  //     props.resetForm();
-  //   } catch (e) {
-  //     alert(e.message);
-  //   }
-  // }
-
+const CreateTask = ({ handleSubmit }) => {
   return (
-    <section className="createTask-section">
+    <>
       <Formik
         validationSchema={schema}
         onSubmit={(values, props) => handleSubmit(values, props)}
@@ -39,24 +25,39 @@ const CreateTask = ({ errors, touched, handleSubmit }) => {
         }}
       >
         {({ errors, touched, resetForm }) => (
-          <Form className="createTask">
-            <h1>Crear tarea</h1>
-            <ul>
-              <li>
-                <label htmlFor="title">
-                  <Field
-                    name="title"
-                    type="text"
-                    placeholder="Título"
-                    id="title"
-                  />
-                  {errors.title && touched.title ? (
-                    <div className="msg-error-form">{errors.title}</div>
-                  ) : null}
-                </label>
-              </li>
-              <li>
-                <Field name="status" as="select" id="status">
+          <Form className={s.container}>
+            <h1 className={s.titulo}>Crear tarea</h1>
+            <div className={s.formContainer}>
+              <div>
+                <Field
+                  className={`${s.input} ${
+                    errors.title && touched.title && s.error
+                  }`}
+                  name="title"
+                  type="text"
+                  placeholder="Título"
+                  id="title"
+                />
+                {errors.title && touched.title ? (
+                  <div
+                    className={`${s.msjError} ${
+                      errors.title && touched.title && s.error
+                    }`}
+                  >
+                    {errors.title}
+                  </div>
+                ) : null}
+              </div>
+
+              <div>
+                <Field
+                  name="status"
+                  as="select"
+                  id="status"
+                  className={`${s.input} ${
+                    errors.status && touched.status && s.error
+                  }`}
+                >
                   <option value="" disabled>
                     Selecciona un estado
                   </option>
@@ -65,11 +66,24 @@ const CreateTask = ({ errors, touched, handleSubmit }) => {
                   <option value="FINISHED">Finalizado</option>
                 </Field>
                 {errors.status && touched.status ? (
-                  <div className="msg-error-form">{errors.status}</div>
+                  <div
+                    className={`${s.msjError} ${
+                      errors.status && touched.status && s.error
+                    }`}
+                  >
+                    {errors.status}
+                  </div>
                 ) : null}
-              </li>
-              <li>
-                <Field name="importance" as="select" id="importance">
+              </div>
+              <div>
+                <Field
+                  name="importance"
+                  as="select"
+                  id="importance"
+                  className={`${s.input} ${
+                    errors.importance && touched.importance && s.error
+                  }`}
+                >
                   <option value="" disabled>
                     Selecciona una prioridad
                   </option>
@@ -78,30 +92,44 @@ const CreateTask = ({ errors, touched, handleSubmit }) => {
                   <option value="HIGH">Alta</option>
                 </Field>
                 {errors.importance && touched.importance ? (
-                  <div className="msg-error-form">{errors.importance}</div>
+                  <div
+                    className={`${s.msjError} ${
+                      errors.importance && touched.importance && s.error
+                    }`}
+                  >
+                    {errors.importance}
+                  </div>
                 ) : null}
-              </li>
-              <li>
-                <label htmlFor="text-task">
-                  <Field
-                    name="description"
-                    type="textarea"
-                    id="description"
-                    placeholder="Descripción"
-                  />
-                  {errors.description && touched.description ? (
-                    <div className="msg-error-form">{errors.description}</div>
-                  ) : null}
-                </label>
-              </li>
-              <li>
-                <button type="submit">Crear</button>
-              </li>
-            </ul>
+              </div>
+
+              <div>
+                <Field
+                  name="description"
+                  type="textarea"
+                  id="description"
+                  placeholder="Descripción"
+                  className={`${s.input} ${
+                    errors.description && touched.description && s.error
+                  }`}
+                />
+                {errors.description && touched.description ? (
+                  <div
+                    className={`${s.msjError} ${
+                      errors.description && touched.description && s.error
+                    }`}
+                  >
+                    {errors.description}
+                  </div>
+                ) : null}
+              </div>
+              <button className={`${s.boton} ${s.botonEnviar}`} type="submit">
+                Crear tarea
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
-    </section>
+    </>
   );
 };
 

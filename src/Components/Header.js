@@ -1,10 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.svg";
-import "../styles/header.css";
+// import "../styles/header.css";
+import s from "../styles/header.module.css";
 
 const Header = () => {
   const navigate = useNavigate();
+  const logeado = localStorage.getItem("token");
+
   function logoutHandle(e) {
     e.preventDefault();
     try {
@@ -15,18 +18,15 @@ const Header = () => {
     }
   }
   return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <img src={Logo} alt="" />
-          </li>
-          <li>
-            <button onClick={logoutHandle}> X </button>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <div className={s.container}>
+      <img src={Logo} alt="" className={s.imagen} />
+      {logeado && (
+        <button onClick={logoutHandle} className={s.boton}>
+          {" "}
+          X{" "}
+        </button>
+      )}
+    </div>
   );
 };
 

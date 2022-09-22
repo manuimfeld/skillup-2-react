@@ -1,10 +1,12 @@
+// import "../styles/home.css";
+import s from "../styles/home.module.css";
 import React, { useEffect, useState } from "react";
 import CreateTask from "./CreateTask";
-import "../styles/home.css";
 import FiltersTask from "./FiltersTask";
 import { useDispatch, useSelector } from "react-redux";
 import { filtrarTareas, getTasks, postTask } from "../redux/actions";
 import Loading from "./Loading";
+import Tasks from "./Tasks";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -41,9 +43,14 @@ const Home = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="layout">
-          <CreateTask handleSubmit={createTaskHandler} />
-          <FiltersTask tareas={tareas} />
+        <div className={s.container}>
+          <div className={s.containerColumna}>
+            <CreateTask handleSubmit={createTaskHandler} />
+            <FiltersTask />
+          </div>
+          <div className={s.tareas}>
+            <Tasks tareas={tareas} />
+          </div>
         </div>
       )}
     </>

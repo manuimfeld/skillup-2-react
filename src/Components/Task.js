@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteTask, getTasks } from "../redux/actions";
+import { deleteTask, getTask, getTasks } from "../redux/actions";
 import s from "../styles/task.module.css";
 
 const Task = ({
@@ -40,20 +40,32 @@ const Task = ({
     }
   }
 
+  async function irAlDetalleHandler(id) {
+    console.log(id);
+    try {
+      const token = localStorage.getItem("token");
+      await dispatch(getTask(id, token));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
-    <div className={s.container}>
+    <div className={s.container} onClick={() => irAlDetalleHandler(id)}>
       <button
         className={s.botonEliminar}
         onClick={() => borrarTareaHandler(id)}
       >
         X
       </button>
-      <h3>{title}</h3>
-      <h6>{yyyymmdd(fecha)}</h6>
-      <h5>{usuario}</h5>
-      <button className={s.boton}>{status}</button>
-      <button className={s.boton}>{prioridad}</button>
-      <p>{description}</p>
+      <h3 className={s.titulo}>{title}</h3>
+      <h6 className={s.fecha}>{yyyymmdd(fecha)}</h6>
+      <h5 className={s.usuario}>{usuario}</h5>
+      <div>
+        <button className={s.boton}>{status}</button>
+        <button className={s.boton}>{prioridad}</button>
+      </div>
+      <p className={s.description}>{description}</p>
     </div>
   );
 };

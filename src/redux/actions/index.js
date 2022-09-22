@@ -121,8 +121,7 @@ export const getTask = (id, token) => {
         },
         url: "https://goscrum-api.alkemy.org/task/" + id,
       });
-      console.log(res.data);
-      // return dispatch({ type: GET_TASK, payload: res.data.result });
+      return dispatch({ type: GET_TASK, payload: res.data.result });
     };
   } catch (e) {
     console.log("error: ", e);

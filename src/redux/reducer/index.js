@@ -36,15 +36,14 @@ const rootReducer = (state = initialState, action) => {
         user: action.payload.user,
       };
     case ADD_TASK:
-      // console.log([...state.tasks, action.payload]);
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
+        tasks: [action.payload, ...state.tasks],
       };
     case GET_TASKS:
       return {
         ...state,
-        tasks: action.payload,
+        tasks: action.payload.reverse(),
       };
     case GET_TASK:
       return {
