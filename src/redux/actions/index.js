@@ -7,7 +7,8 @@ export const LOGIN_USER = "LOGIN_USER",
   GET_TASKS = "GET_TASKS",
   GET_TASK = "GET_TASK",
   PATCH_TASK = "PATCH_TASK",
-  DELETE_TASK = "DELETE_TASK";
+  DELETE_TASK = "DELETE_TASK",
+  FILTER_TASKS = "FILTER_TASKS";
 
 export const getDataRegister = () => {
   try {
@@ -83,7 +84,6 @@ export const getTasks = (token) => {
         },
         url: "https://goscrum-api.alkemy.org/task",
       });
-      console.log(res.data);
       return dispatch({ type: GET_TASKS, payload: res.data.result });
     };
   } catch (e) {
@@ -166,4 +166,10 @@ export const deleteTask = (task, id, token) => {
   } catch (e) {
     console.log("error: ", e);
   }
+};
+
+export const filtrarTareas = (tipo, forma) => {
+  return function (dispatch) {
+    return dispatch({ type: FILTER_TASKS, payload: { tipo, forma } });
+  };
 };

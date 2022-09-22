@@ -30,8 +30,8 @@ function App() {
 
   return (
     <>
-      <Header />
       <BrowserRouter>
+        <Header />
         <AnimatePresence>
           <Routes>
             <Route
@@ -61,16 +61,15 @@ function App() {
               }
             />
             <Route
-              path="/"
+              path="*"
               element={
                 <Motion>
                   <Auth>
-                    <Home />
+                    <Home />1
                   </Auth>
                 </Motion>
               }
             />
-            <Route path="*" element={<Home />} />
           </Routes>
         </AnimatePresence>
       </BrowserRouter>

@@ -6,12 +6,20 @@ import {
   GET_TASK,
   PATCH_TASK,
   DELETE_TASK,
+  FILTER_TASKS,
 } from "../actions";
+import filtrosTareas from "./filtrosTareas";
 
 const initialState = {
   dataRegister: [],
   user: {},
   tasks: [],
+  filteredTasks: [],
+  filters: {
+    prioridad: "ALL",
+    estado: "ALL",
+    title: "",
+  },
   task: {},
 };
 
@@ -28,6 +36,7 @@ const rootReducer = (state = initialState, action) => {
         user: action.payload.user,
       };
     case ADD_TASK:
+      // console.log([...state.tasks, action.payload]);
       return {
         ...state,
         tasks: [...state.tasks, action.payload],
@@ -42,6 +51,30 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         task: action.payload,
       };
+    case FILTER_TASKS:
+      if (action.payload.tipo === "INICIAR") {
+        return {
+          ...state,
+          filteredTasks: state.tasks,
+        };
+      }
+      if (action.payload.tipo === "REINICIAR") {
+        return {
+          ...state,
+          filteredTasks: [],
+        };
+      } else {
+        let filters = {
+          ...state.filters,
+          [action.payload.tipo]: action.payload.forma,
+        };
+        const filtrados = filtrosTareas(state.tasks, filters);
+        return {
+          ...state,
+          filters,
+          filteredTasks: filtrados,
+        };
+      }
     default:
       return { ...state };
   }

@@ -65,7 +65,7 @@ const FormRegister = ({ errors, touched, values }) => {
         <li>
           <label htmlFor="select-rol">Rol: </label>
           <Field name="role" as="select" id="select-rol">
-            <option value="" selected disabled>
+            <option value="" disabled>
               Selecciona un rol
             </option>
             {datosRegistro?.Rol?.map((i) => (
@@ -81,7 +81,7 @@ const FormRegister = ({ errors, touched, values }) => {
         <li>
           <label htmlFor="continente">Continente</label>
           <Field name="continent" as="select" id="continente">
-            <option value="" selected disabled>
+            <option value="" disabled>
               Selecciona un continente
             </option>
             {datosRegistro?.continente?.map((i) => (
@@ -97,7 +97,7 @@ const FormRegister = ({ errors, touched, values }) => {
         <li>
           <label htmlFor="region">Región: </label>
           <Field name="region" as="select" id="region">
-            <option value="" selected disabled>
+            <option value="" disabled>
               Selecciona una region
             </option>
             {datosRegistro?.region?.map((i) => (

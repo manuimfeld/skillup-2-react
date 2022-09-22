@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { postTask } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { filtrarTareas, postTask } from "../redux/actions";
 
 const schema = Yup.object().shape({
   title: Yup.string().required("Requerido"),
@@ -11,19 +11,26 @@ const schema = Yup.object().shape({
   description: Yup.string().required("Requerido"),
 });
 
-const CreateTask = ({ errors, touched }) => {
+const CreateTask = ({ errors, touched, setCreado, creado }) => {
   const dispatch = useDispatch();
+  const tareas = useSelector((e) => e.tasks);
 
   async function handleSubmit(datos, props) {
     try {
       const respuesta = dispatch(
         postTask(datos, localStorage.getItem("token"))
       );
+      dispatch(filtrarTareas("INICIAR", "INICIAR"));
       props.resetForm();
+      setCreado(!creado);
     } catch (e) {
       alert(e.message);
     }
   }
+
+  // useEffect(() => {
+  //   console.log("hola mundo");
+  // }, [tareas]);
 
   return (
     <section className="createTask-section">
@@ -56,8 +63,8 @@ const CreateTask = ({ errors, touched }) => {
               </li>
               <li>
                 <Field name="status" as="select" id="status">
-                  <option value="" selected disabled>
-                    Selecciona una estado
+                  <option value="" disabled>
+                    Selecciona un estado
                   </option>
                   <option value="NEW">Nuevo</option>
                   <option value="IN PROGRESS">En progreso</option>
@@ -69,7 +76,7 @@ const CreateTask = ({ errors, touched }) => {
               </li>
               <li>
                 <Field name="importance" as="select" id="importance">
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     Selecciona una prioridad
                   </option>
                   <option value="LOW">Baja</option>

@@ -1,8 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../img/Logo.svg";
 import "../styles/header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
+  function logoutHandle(e) {
+    e.preventDefault();
+    try {
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <header>
       <nav>
@@ -11,13 +22,7 @@ const Header = () => {
             <img src={Logo} alt="" />
           </li>
           <li>
-            <button>Donar</button>
-          </li>
-          <li>
-            <p>Tareas creadas: 3</p>
-          </li>
-          <li>
-            <p>User2</p>
+            <button onClick={logoutHandle}> X </button>
           </li>
         </ul>
       </nav>

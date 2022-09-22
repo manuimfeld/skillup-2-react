@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Task from "./Task";
-import { Form, Field, Formik } from "formik";
+import React, { useEffect } from "react";
+import Tasks from "./Tasks";
+import { Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { getTasks, getPersonalTasks } from "../redux/actions";
+import { filtrarTareas, getTasks } from "../redux/actions";
 
-const FiltersTask = () => {
-  const [tasks, setTasks] = useState([]);
+const FiltersTask = ({ creado }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,12 +12,19 @@ const FiltersTask = () => {
       try {
         const token = await localStorage.getItem("token");
         const respuesta = await dispatch(getTasks(token));
+        dispatch(filtrarTareas("INICIAR", "INICIAR"));
       } catch (e) {
         console.log("error: ", e);
       }
     }
     fetch();
   }, []);
+
+  useEffect(() => {}, [dispatch]);
+
+  function filtrosHandler(prop, evento) {
+    dispatch(filtrarTareas(prop, evento.target.value));
+  }
 
   return (
     <section className="filters-section">
@@ -29,6 +35,7 @@ const FiltersTask = () => {
             <li>
               <label htmlFor="">
                 <input
+                  onChange={filtrosHandler.bind(null, "title")}
                   type="text"
                   name="title-task"
                   id="title-task"
@@ -37,18 +44,33 @@ const FiltersTask = () => {
               </label>
             </li>
             <li>
-              <select name="select-priority" id="select-priority">
-                <option disabled selected>
-                  Seleccionar una prioridad
-                </option>
-                <option value="value1">Alta</option>
-                <option value="value2">Baja</option>
+              <select
+                onChange={filtrosHandler.bind(null, "estado")}
+                name="select-priority"
+                id="select-priority"
+              >
+                <option value="ALL">Todos los estados</option>
+                <option value="NEW">Nuevo</option>
+                <option value="IN PROGRESS">En progreso</option>
+                <option value="FINISHED">Finalizado</option>
+              </select>
+            </li>
+            <li>
+              <select
+                onChange={filtrosHandler.bind(null, "prioridad")}
+                name="select-priority"
+                id="select-priority"
+              >
+                <option value="ALL">Todas las prioridades</option>
+                <option value="HIGH">Alta</option>
+                <option value="MEDIUM">Media</option>
+                <option value="LOW">Baja</option>
               </select>
             </li>
           </ul>
         </Form>
       </Formik>
-      <Task />
+      <Tasks creado={creado} />
     </section>
   );
 };
