@@ -4,15 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filtrarTareas } from "../redux/actions";
 import filtrosTareas from "../redux/reducer/filtrosTareas";
 
-const Tasks = ({ creado }) => {
-  const dispatch = useDispatch();
-  const tareas = useSelector((e) => e.filteredTasks);
-
-  useEffect(() => {
-    // dispatch(filtrarTareas("INICIAR", "INICIAR"));
-    console.log("hbola");
-  }, [creado]);
-
+const Tasks = ({ tareas }) => {
   return (
     <>
       {tareas &&

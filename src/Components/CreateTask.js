@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,26 +11,20 @@ const schema = Yup.object().shape({
   description: Yup.string().required("Requerido"),
 });
 
-const CreateTask = ({ errors, touched, setCreado, creado }) => {
+const CreateTask = ({ errors, touched, handleSubmit }) => {
   const dispatch = useDispatch();
-  const tareas = useSelector((e) => e.tasks);
 
-  async function handleSubmit(datos, props) {
-    try {
-      const respuesta = dispatch(
-        postTask(datos, localStorage.getItem("token"))
-      );
-      dispatch(filtrarTareas("INICIAR", "INICIAR"));
-      props.resetForm();
-      setCreado(!creado);
-    } catch (e) {
-      alert(e.message);
-    }
-  }
-
-  // useEffect(() => {
-  //   console.log("hola mundo");
-  // }, [tareas]);
+  // async function handleSubmit(datos, props) {
+  //   try {
+  //     const respuesta = dispatch(
+  //       postTask(datos, localStorage.getItem("token"))
+  //     );
+  //     dispatch(filtrarTareas("INICIAR", "INICIAR"));
+  //     props.resetForm();
+  //   } catch (e) {
+  //     alert(e.message);
+  //   }
+  // }
 
   return (
     <section className="createTask-section">

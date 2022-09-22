@@ -4,23 +4,8 @@ import { Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { filtrarTareas, getTasks } from "../redux/actions";
 
-const FiltersTask = ({ creado }) => {
+const FiltersTask = ({ tareas }) => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const token = await localStorage.getItem("token");
-        const respuesta = await dispatch(getTasks(token));
-        dispatch(filtrarTareas("INICIAR", "INICIAR"));
-      } catch (e) {
-        console.log("error: ", e);
-      }
-    }
-    fetch();
-  }, []);
-
-  useEffect(() => {}, [dispatch]);
 
   function filtrosHandler(prop, evento) {
     dispatch(filtrarTareas(prop, evento.target.value));
@@ -70,7 +55,7 @@ const FiltersTask = ({ creado }) => {
           </ul>
         </Form>
       </Formik>
-      <Tasks creado={creado} />
+      <Tasks tareas={tareas} />
     </section>
   );
 };
