@@ -25,103 +25,96 @@ const CreateTask = ({ handleSubmit }) => {
         }}
       >
         {({ errors, touched, resetForm }) => (
-          <Form className={s.container}>
+          <Form className={s.containerHome}>
             <h1 className={s.titulo}>Crear tarea</h1>
             <div className={s.formContainer}>
-              <div>
-                <Field
-                  className={`${s.input} ${
+              <Field
+                className={`${s.input} ${
+                  errors.title && touched.title && s.error
+                }`}
+                name="title"
+                type="text"
+                placeholder="Título"
+                id="title"
+              />
+              {errors.title && touched.title ? (
+                <div
+                  className={`${s.msjError} ${
                     errors.title && touched.title && s.error
                   }`}
-                  name="title"
-                  type="text"
-                  placeholder="Título"
-                  id="title"
-                />
-                {errors.title && touched.title ? (
-                  <div
-                    className={`${s.msjError} ${
-                      errors.title && touched.title && s.error
-                    }`}
-                  >
-                    {errors.title}
-                  </div>
-                ) : null}
-              </div>
+                >
+                  {errors.title}
+                </div>
+              ) : null}
 
-              <div>
-                <Field
-                  name="status"
-                  as="select"
-                  id="status"
-                  className={`${s.input} ${
+              <Field
+                name="status"
+                as="select"
+                id="status"
+                className={`${s.input} ${
+                  errors.status && touched.status && s.error
+                }`}
+              >
+                <option value="" disabled>
+                  Selecciona un estado
+                </option>
+                <option value="NEW">Nuevo</option>
+                <option value="IN PROGRESS">En progreso</option>
+                <option value="FINISHED">Finalizado</option>
+              </Field>
+              {errors.status && touched.status ? (
+                <div
+                  className={`${s.msjError} ${
                     errors.status && touched.status && s.error
                   }`}
                 >
-                  <option value="" disabled>
-                    Selecciona un estado
-                  </option>
-                  <option value="NEW">Nuevo</option>
-                  <option value="IN PROGRESS">En progreso</option>
-                  <option value="FINISHED">Finalizado</option>
-                </Field>
-                {errors.status && touched.status ? (
-                  <div
-                    className={`${s.msjError} ${
-                      errors.status && touched.status && s.error
-                    }`}
-                  >
-                    {errors.status}
-                  </div>
-                ) : null}
-              </div>
-              <div>
-                <Field
-                  name="importance"
-                  as="select"
-                  id="importance"
-                  className={`${s.input} ${
+                  {errors.status}
+                </div>
+              ) : null}
+
+              <Field
+                name="importance"
+                as="select"
+                id="importance"
+                className={`${s.input} ${
+                  errors.importance && touched.importance && s.error
+                }`}
+              >
+                <option value="" disabled>
+                  Selecciona una prioridad
+                </option>
+                <option value="LOW">Baja</option>
+                <option value="MEDIUM">Media</option>
+                <option value="HIGH">Alta</option>
+              </Field>
+              {errors.importance && touched.importance ? (
+                <div
+                  className={`${s.msjError} ${
                     errors.importance && touched.importance && s.error
                   }`}
                 >
-                  <option value="" disabled>
-                    Selecciona una prioridad
-                  </option>
-                  <option value="LOW">Baja</option>
-                  <option value="MEDIUM">Media</option>
-                  <option value="HIGH">Alta</option>
-                </Field>
-                {errors.importance && touched.importance ? (
-                  <div
-                    className={`${s.msjError} ${
-                      errors.importance && touched.importance && s.error
-                    }`}
-                  >
-                    {errors.importance}
-                  </div>
-                ) : null}
-              </div>
+                  {errors.importance}
+                </div>
+              ) : null}
 
-              <div>
-                <Field
-                  name="description"
-                  type="textarea"
-                  id="description"
-                  placeholder="Descripción"
-                  className={`${s.input} ${
+              <Field
+                name="description"
+                type="textarea"
+                id="description"
+                placeholder="Descripción"
+                className={`${s.input} ${
+                  errors.description && touched.description && s.error
+                }`}
+              />
+              {errors.description && touched.description ? (
+                <div
+                  className={`${s.msjError} ${
                     errors.description && touched.description && s.error
                   }`}
-                />
-                {errors.description && touched.description ? (
-                  <div
-                    className={`${s.msjError} ${
-                      errors.description && touched.description && s.error
-                    }`}
-                  >
-                    {errors.description}
-                  </div>
-                ) : null}
-              </div>
+                >
+                  {errors.description}
+                </div>
+              ) : null}
               <button className={`${s.boton} ${s.botonEnviar}`} type="submit">
                 Crear tarea
               </button>

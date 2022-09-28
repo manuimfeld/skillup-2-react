@@ -14,7 +14,7 @@ const FiltersTask = () => {
   }
 
   return (
-    <div className={s.container}>
+    <div className={s.containerHome}>
       <div className={s.formContainer}>
         <h1 className={`${s.titulo} ${s.centrarTexto}`}>Mis tareas</h1>
 

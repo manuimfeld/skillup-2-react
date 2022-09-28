@@ -22,7 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   async function handleSubmit(datos) {
-    datos.preventDefault();
+    datos.preventDefault()
     try {
       const user = await dispatch(
         loginUser({
@@ -43,9 +43,6 @@ const Login = () => {
 
   return (
     <div id="loginWrapper" className={s.container}>
-      <div id="loginTitle" className={s.titulo}>
-        Iniciar sesión
-      </div>
       <Formik
         validationSchema={schema}
         onSubmit={(values) => handleSubmit(values)}
@@ -56,6 +53,9 @@ const Login = () => {
       >
         {({ errors, touched }) => (
           <Form onSubmit={handleSubmit} className={s.formContainer}>
+            <div id="loginTitle" className={s.titulo}>
+              Iniciar sesión
+            </div>
             <label
               htmlFor="username"
               className={`${s.label} ${

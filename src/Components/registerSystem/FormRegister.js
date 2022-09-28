@@ -31,9 +31,9 @@ const FormRegister = ({ errors, touched, values }) => {
   }
 
   return (
-    <Form className={s.formContainer}>
-      <h1 className={s.titulo}>Registro</h1>
+    <Form className={s.container}>
       <div className={s.formContainer}>
+        <h1 className={s.titulo}>Registro</h1>
         <label
           htmlFor="userName"
           className={`${s.label} ${
@@ -144,7 +144,7 @@ const FormRegister = ({ errors, touched, values }) => {
 
         <label
           htmlFor="select-rol"
-          className={`${s.label} ${errors.teamID && touched.role && s.error}`}
+          className={`${s.label} ${errors.role && touched.role && s.error}`}
         >
           Rol:{" "}
         </label>
@@ -152,7 +152,7 @@ const FormRegister = ({ errors, touched, values }) => {
           name="role"
           as="select"
           id="select-rol"
-          className={`${s.input} ${errors.teamID && touched.role && s.error}`}
+          className={`${s.input} ${errors.role && touched.role && s.error}`}
         >
           <option value="" disabled>
             Selecciona un rol
@@ -163,10 +163,11 @@ const FormRegister = ({ errors, touched, values }) => {
             </option>
           ))}
         </Field>
+
         {errors.role && touched.role ? (
           <div
             className={`${s.msjError} ${
-              errors.teamID && touched.role && s.error
+              errors.role && touched.role && s.error
             }`}
           >
             {errors.role}

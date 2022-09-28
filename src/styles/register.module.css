@@ -1,9 +1,10 @@
 .container {
-    padding: 0 5vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 48px;
+    min-height: calc(100vh - 96px);
 }
 
 .formContainer {
@@ -47,9 +48,17 @@
 }
 
 .botonRegistrar {
-    background-color: green;
+    background-color: var(--color-primary);
 }
 
 .botonLogear {
-    background-color: blue;
+    background-color: green;
+}
+
+@media (min-width: 900px) {
+    .formContainer {
+        border-radius: 16px;
+        border: 1px solid grey;
+        padding: 5%;
+    }
 }

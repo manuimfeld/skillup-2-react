@@ -6,11 +6,11 @@ import s from "../styles/task.module.css";
 const Tasks = ({ tareas }) => {
   return (
     <>
-      {tareas &&
-        tareas?.map((i) => {
+      {tareas.length ? (
+        tareas?.map((i, idx) => {
           return (
             <Task
-              key={i.title}
+              key={i.title + idx}
               id={i._id}
               title={i.title}
               fecha={i.createdAt}
@@ -20,7 +20,10 @@ const Tasks = ({ tareas }) => {
               description={i.description.slice(0, 50)}
             />
           );
-        })}
+        })
+      ) : (
+        <div>No hay tareas</div>
+      )}
     </>
   );
 };

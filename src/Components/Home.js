@@ -5,7 +5,7 @@ import CreateTask from "./CreateTask";
 import FiltersTask from "./FiltersTask";
 import { useDispatch, useSelector } from "react-redux";
 import { filtrarTareas, getTasks, postTask } from "../redux/actions";
-import Loading from "./Loading";
+import ClipLoader from "react-spinners/ClipLoader";
 import Tasks from "./Tasks";
 
 const Home = () => {
@@ -27,10 +27,14 @@ const Home = () => {
 
   useEffect(() => {
     async function fetch() {
+      setLoading(true);
       try {
         const token = await localStorage.getItem("token");
         await dispatch(getTasks(token));
-        dispatch(filtrarTareas("INICIAR", "INICIAR"));
+        await dispatch(filtrarTareas("INICIAR", "INICIAR"));
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       } catch (e) {
         console.log("error: ", e);
       }
@@ -41,7 +45,17 @@ const Home = () => {
   return (
     <>
       {loading ? (
-        <Loading />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+        >
+          <ClipLoader size="100" />
+        </div>
       ) : (
         <div className={s.container}>
           <div className={s.containerColumna}>

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteTask, getTask, getTasks } from "../redux/actions";
 import s from "../styles/task.module.css";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const Task = ({
   title,
@@ -12,6 +13,7 @@ const Task = ({
   description,
   id,
 }) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   function yyyymmdd(fecha) {
     function addZero(i) {
@@ -32,16 +34,17 @@ const Task = ({
   }
 
   async function borrarTareaHandler(id) {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       await dispatch(deleteTask(id, token));
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
   }
 
   async function irAlDetalleHandler(id) {
-    console.log(id);
     try {
       const token = localStorage.getItem("token");
       await dispatch(getTask(id, token));
@@ -51,21 +54,31 @@ const Task = ({
   }
 
   return (
-    <div className={s.container} onClick={() => irAlDetalleHandler(id)}>
-      <button
-        className={s.botonEliminar}
-        onClick={() => borrarTareaHandler(id)}
-      >
-        X
-      </button>
-      <h3 className={s.titulo}>{title}</h3>
-      <h6 className={s.fecha}>{yyyymmdd(fecha)}</h6>
-      <h5 className={s.usuario}>{usuario}</h5>
-      <div>
-        <button className={s.boton}>{status}</button>
-        <button className={s.boton}>{prioridad}</button>
-      </div>
-      <p className={s.description}>{description}</p>
+    <div className={s.container}>
+      {loading ? (
+        <PacmanLoader />
+      ) : (
+        <>
+          <button
+            className={s.botonEliminar}
+            onClick={() => borrarTareaHandler(id)}
+          >
+            X
+          </button>
+          <h3 className={s.titulo}>{title}</h3>
+          <h6 className={s.fecha}>{yyyymmdd(fecha)}</h6>
+          <h5 className={s.usuario}>{usuario}</h5>
+          <div className={s.contBotones}>
+            <button className={`${s.boton} ${s[status.toLowerCase()]}`}>
+              {status.toLowerCase()}
+            </button>
+            <button className={`${s.boton} ${s[prioridad.toLowerCase()]}`}>
+              {prioridad.toLowerCase()}
+            </button>
+          </div>
+          <p className={s.description}>{description}</p>
+        </>
+      )}
     </div>
   );
 };
